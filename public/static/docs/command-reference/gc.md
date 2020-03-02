@@ -5,7 +5,8 @@ Remove unused objects from <abbr>cache</abbr> or remote storage.
 ## Synopsis
 
 ```usage
-usage: dvc gc [-h] [-q | -v] [-w] [-a] [-T] [-c] [-r REMOTE] [-f] [-j JOBS]
+usage: dvc gc [-h] [-q | -v]
+              [-w] [-a] [-T] [-c] [-r REMOTE] [-f] [-j JOBS]
               [-p [REPOS [REPOS ...]]]
 ```
 
@@ -46,9 +47,9 @@ restored using `dvc fetch`, as long as they have previously been uploaded with
   useful if tags are used to track "checkpoints" of an experiment or project.
   Note that both options can be combined, for example using the `-aT` flag.
 
-- `-w`, `--workspace` - remove files in local cache. _This operation is
-  dangerous._ If `--all-tags` or `--all-branches` are specified, this flag is
-  not explicitly required.
+- `-w`, `--workspace` - remove files in local cache that are not referenced in
+  the workspace. _This operation is dangerous._ If `--all-tags` or
+  `--all-branches` are specified, this flag is not explicitly required.
 
 - `-p`, `--projects` - if a single remote or a single cache is shared among
   different projects (e.g. a configuration like the one described
@@ -86,8 +87,9 @@ $ du -sh .dvc/cache/
 7.4G    .dvc/cache/
 ```
 
-When you run `dvc gc` it removes all objects from cache that are not referenced
-in the <abbr>workspace</abbr> (by collecting hash values from the DVC-files):
+When you run `dvc gc --workspace` it removes all objects from cache that are not
+referenced in the <abbr>workspace</abbr> (by collecting hash values from the
+DVC-files):
 
 ```dvc
 $ dvc gc --workspace
